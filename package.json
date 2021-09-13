@@ -1,0 +1,29 @@
+{
+  "name": "transcribo",
+  "version": "1.0.0",
+  "description": "speech to text notetaking app with voice commands",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "prettier:check": "prettier --check '**.js'",
+    "lint:check": "eslint '**.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SiouxsieAsylum/Transcribo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiouxsieAsylum/Transcribo/issues"
+  },
+  "homepage": "https://github.com/SiouxsieAsylum/Transcribo#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.0",
+    "prettier": "^2.4.0"
+  }
+}

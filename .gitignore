@@ -1,0 +1,4 @@
+.husky/
+.env
+node_modules/
+
