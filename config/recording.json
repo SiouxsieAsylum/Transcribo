@@ -1,0 +1,6 @@
+{
+    "threshold": 0,
+    "verbose": false,
+    "recordProgram": "rec", 
+    "silence": "10.0"
+  }

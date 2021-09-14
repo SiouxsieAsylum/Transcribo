@@ -4,6 +4,14 @@
         "prettier"
     ],
     "rules": {
-        "eqeqeq": "error"
+        "eqeqeq": "error",
+        "no-undef": "off"
+    },
+    "ignorePatterns": ["**.config.js", "node_modules/**"],
+    "env": {
+        "es6": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2017
     }
 }

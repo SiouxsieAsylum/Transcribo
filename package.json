@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install",
-    "prettier:check": "prettier --check '**.js'",
-    "lint:check": "eslint '**.js'"
+    "prettier:fix": "prettier --write **.js src/*/**.js",
+    "prettier:check": "prettier --check **.js src/*/**.js",
+    "lint:check": "eslint --config .eslintrc.json **.js src/*/**.js",
+    "init-stt": "brew install sox && npm run prepare"
   },
   "repository": {
     "type": "git",
@@ -19,11 +21,17 @@
     "url": "https://github.com/SiouxsieAsylum/Transcribo/issues"
   },
   "homepage": "https://github.com/SiouxsieAsylum/Transcribo#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@google-cloud/speech": "^4.8.1",
+    "dotenv": "^10.0.0",
+    "node-record-lpcm16": "^1.0.1"
+  },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.0",
-    "prettier": "^2.4.0"
+    "json-loader": "^0.5.7",
+    "prettier": "^2.4.0",
+    "webpack": "^5.52.1"
   }
 }
