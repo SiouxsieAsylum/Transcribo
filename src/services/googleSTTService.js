@@ -22,7 +22,7 @@ const recognizeStream = client
   .on("error", console.error)
   .on("data", (data) => {
     data.results[0] && data.results[0].alternatives[0]
-      ? recieveTranscript(data.results[0].alternatives[0].transcript)
+      ? recieveTranscript(data)
       : console.log("\n\nReached transcription time limit, press Ctrl+C\n");
   });
 

@@ -12,9 +12,8 @@ const connect = async () => {
   console.log(`Connected to ${dbName}`);
 };
 
-// add session
-// add note to session
-// update note in session (order, text(needs handling in TranscriptHandler))
-// delete note in session
+// add and return session
+// update session
+// delete session
 
 const addNote = async () => {};
