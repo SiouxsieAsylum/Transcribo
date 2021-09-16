@@ -27,7 +27,9 @@
     "create-react-app": "^4.0.3",
     "dotenv": "^10.0.0",
     "mongodb": "^4.1.2",
-    "node-record-lpcm16": "^1.0.1"
+    "node-record-lpcm16": "^1.0.1",
+    "uuid": "^8.3.2",
+    "websocket": "^1.0.34"
   },
   "devDependencies": {
     "eslint": "^7.32.0",

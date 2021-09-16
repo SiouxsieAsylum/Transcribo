@@ -1,7 +1,7 @@
 const recognitionConfig = require("../../config/recognition.json");
 const streamingRecognitionConfig = require("../../config/streaming-recognition.json");
 const speakerDiarizationConfig = require("../../config/speaker-diarization.json");
-const recordingConfig = require("../../config/recording.json");
+const recordingConfig = require("../../config/server-recording.json");
 
 const recorder = require("node-record-lpcm16");
 const speech = require("@google-cloud/speech");

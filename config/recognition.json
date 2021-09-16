@@ -1,6 +1,6 @@
 {
     "encoding": "LINEAR16",
-    "sampleRateHertz": 16000,
+    "sampleRateHertz": 22050,
     "languageCode": "en-US",
     "enableAutomaticPunctuation": true,
     "speechContexts": []
