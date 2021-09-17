@@ -25,8 +25,6 @@ export default App;
 
 /**
   To-Dos:
-    - Hide ServerRecorderService in own file 
     - Hook up the front end recording to the back end 
     - MongoDB hookup to generate session, save, and return to FE
-    - New start script to run server recording separately
  */

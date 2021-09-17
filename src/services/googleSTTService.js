@@ -1,9 +1,7 @@
 const recognitionConfig = require("../../config/recognition.json");
 const streamingRecognitionConfig = require("../../config/streaming-recognition.json");
 const speakerDiarizationConfig = require("../../config/speaker-diarization.json");
-const recordingConfig = require("../../config/server-recording.json");
 
-const recorder = require("node-record-lpcm16");
 const speech = require("@google-cloud/speech");
 
 const { recieveTranscript } = require("./transcriptHandlerService");
@@ -11,9 +9,6 @@ const { recieveTranscript } = require("./transcriptHandlerService");
 // ---------------- REQUEST CONFIGS --------------------
 recognitionConfig.diarizationConfig = speakerDiarizationConfig;
 streamingRecognitionConfig.config = recognitionConfig;
-
-const { sampleRateHertz } = recognitionConfig;
-recordingConfig.sampleRateHertz = sampleRateHertz;
 
 // ------------------- STREAMING -----------------------
 const client = new speech.SpeechClient();
@@ -27,14 +22,7 @@ const recognizeStream = client
   });
 
 // ------------------- RECORDING -----------------------
-const recordTranscript = () => {
-  recorder
-    .record(recordingConfig)
-    .stream()
-    .on("error", console.error)
-    .pipe(recognizeStream);
-};
 
 module.exports = {
-  recordTranscript,
+  recognizeStream,
 };

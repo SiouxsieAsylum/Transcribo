@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
+    "start:server": "node app.js server",
     "prepare": "husky install",
     "prettier:fix": "prettier --write **.js src/*/**.js",
     "prettier:check": "prettier --check **.js src/*/**.js",
@@ -26,6 +27,7 @@
     "@google-cloud/speech": "^4.8.1",
     "create-react-app": "^4.0.3",
     "dotenv": "^10.0.0",
+    "minimist": "^1.2.5",
     "mongodb": "^4.1.2",
     "node-record-lpcm16": "^1.0.1",
     "uuid": "^8.3.2",
