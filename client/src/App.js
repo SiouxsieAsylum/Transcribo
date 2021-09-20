@@ -11,13 +11,19 @@ function App() {
       console.log('Websocket Client Connected')
     }
 
-    client.onmessage = (message) => {
-      console.log(message)
+    client.onmessage = (event) => {
+      console.log(event)
+    }
+
+    client.onclose = () => {
+      console.log('Websocket closed')
     }
   })
 
   return (
-    <Recorder />
+    <Recorder
+      client={client}
+     />
   );
 }
 

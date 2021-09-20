@@ -1,7 +1,6 @@
 {
     "sampleRate": 22050,
     "bufferSize": 4096,
-    "recorderType": "StereoAudioRecorder",
     "mimeType": "audio/wav",
-    "timeSlice": 1000 
+    "timeSlice": 100 
 }

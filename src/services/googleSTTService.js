@@ -10,19 +10,32 @@ const { recieveTranscript } = require("./transcriptHandlerService");
 recognitionConfig.diarizationConfig = speakerDiarizationConfig;
 streamingRecognitionConfig.config = recognitionConfig;
 
-// ------------------- STREAMING -----------------------
 const client = new speech.SpeechClient();
-const recognizeStream = client
-  .streamingRecognize(streamingRecognitionConfig)
-  .on("error", console.error)
-  .on("data", (data) => {
-    data.results[0] && data.results[0].alternatives[0]
-      ? recieveTranscript(data)
-      : console.log("\n\nReached transcription time limit, press Ctrl+C\n");
-  });
 
-// ------------------- RECORDING -----------------------
+module.exports = (server) => {
+  module.recognizeStream = client
+    .streamingRecognize(streamingRecognitionConfig)
+    .on("error", console.error)
+    .on("data", (data) => {
+      console.log("I even got here, yay");
+      console.log("---------------------");
+      console.log(JSON.stringify(data));
 
-module.exports = {
-  recognizeStream,
+      const { isFinal } = data.results[0];
+      const successfulResponse =
+        data.results[0] && data.results[0].alternatives[0];
+      if (successfulResponse && isFinal) {
+        const { transcript } = successfulResponse;
+        console.log("=====================");
+        console.log("---------------------");
+        console.log("---------------------");
+        console.log("---------------------");
+        console.log(`Final Transcript || ====-----==== || ${transcript}`);
+        server ? server.send(transcript) : recieveTranscript(data);
+      } else {
+        console.log("\n\nReached transcription time limit, press Ctrl+C\n");
+      }
+    });
+
+  return module;
 };

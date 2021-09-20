@@ -1,4 +1,4 @@
-const { recognizeStream } = require("./googleSTTService");
+const { recognizeStream } = require("./googleSTTService")();
 const recordingConfig = require("../../config/server-recording.json");
 const recognitionConfig = require("../../config/recognition.json");
 
