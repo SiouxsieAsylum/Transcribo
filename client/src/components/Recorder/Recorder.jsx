@@ -3,7 +3,7 @@ import recordingConfig from '../../config/recording.json';
 import { extractPCM } from  '../../services/recordingHelper.js'
 
 const Recorder = (props) => {
-    const { client } = props;
+    let client;
     let microphone;
     let recorder;
 
@@ -27,6 +27,7 @@ const Recorder = (props) => {
     const startRecording = (mic) => {
         recordingConfig.ondataavailable = (blob) => {
             console.log('new audio!')
+            client = new W3CWebSocket(`ws://127.0.0.1:8000`);
             client.send(blob)
         };
         recordingConfig.recorderType = StereoAudioRecorder;
@@ -36,10 +37,25 @@ const Recorder = (props) => {
     }
 
     const stopRecording = () => {
+        client.close();
         recorder.microphone.stop();
         recorder.stopRecording();
         console.log("stopped")
     }
+
+    useEffect(() => {
+        client.onopen = () => {
+            console.log('Websocket Client Connected')
+        }
+
+        client.onmessage = (event) => {
+            console.log(event)
+        }
+
+        client.onclose = () => {
+            console.log('Websocket closed')
+        }
+    })
 
     return (
         <>

@@ -4,25 +4,8 @@ import './App.css';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 function App() {
-  const client = new W3CWebSocket(`ws://127.0.0.1:8000`)
-
-  useEffect(() => {
-    client.onopen = () => {
-      console.log('Websocket Client Connected')
-    }
-
-    client.onmessage = (event) => {
-      console.log(event)
-    }
-
-    client.onclose = () => {
-      console.log('Websocket closed')
-    }
-  })
-
   return (
     <Recorder
-      client={client}
      />
   );
 }

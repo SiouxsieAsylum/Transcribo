@@ -29,7 +29,7 @@ if (args._[0] === "server") {
       console.log("message recieved", stream.type);
 
       // const websocketStream = require('websocket-stream');
-      // websocketStream(connection)
+
       // stream.pipe(recognizeStream);
       // websocket-stream sets up the initial server to be the stream, and doesn't recognize the audio data coming through
       // how do I send the blob packets down and pipe them after the button is pressed?
