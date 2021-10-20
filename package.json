@@ -5,8 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "start:server": "node app.js server",
+    "client": "cd client/ && npm run start",
+    "server": "nodemon app.js",
+    "start": "concurrently \"npm run client\"  \"npm run server\" ",
     "prepare": "husky install",
     "prettier:fix": "prettier --write **.js src/*/**.js",
     "prettier:check": "prettier --check **.js src/*/**.js",
@@ -30,11 +31,13 @@
     "minimist": "^1.2.5",
     "mongodb": "^4.1.2",
     "node-record-lpcm16": "^1.0.1",
+    "nodemon": "^2.0.12",
     "uuid": "^8.3.2",
     "websocket": "^1.0.34",
     "websocket-stream": "^5.5.2"
   },
   "devDependencies": {
+    "concurrently": "^6.3.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.0",

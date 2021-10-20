@@ -12,26 +12,18 @@ streamingRecognitionConfig.config = recognitionConfig;
 
 const client = new speech.SpeechClient();
 
-module.exports = (server) => {
+module.exports = (connection) => {
   module.recognizeStream = client
     .streamingRecognize(streamingRecognitionConfig)
     .on("error", console.error)
     .on("data", (data) => {
-      console.log("I even got here, yay");
-      console.log("---------------------");
-      console.log(JSON.stringify(data));
-
       const { isFinal } = data.results[0];
       const successfulResponse =
         data.results[0] && data.results[0].alternatives[0];
       if (successfulResponse && isFinal) {
         const { transcript } = successfulResponse;
-        console.log("=====================");
-        console.log("---------------------");
-        console.log("---------------------");
-        console.log("---------------------");
         console.log(`Final Transcript || ====-----==== || ${transcript}`);
-        server ? server.send(transcript) : recieveTranscript(data);
+        connection ? connection.send(transcript) : recieveTranscript(data);
       } else {
         console.log("\n\nReached transcription time limit, press Ctrl+C\n");
       }

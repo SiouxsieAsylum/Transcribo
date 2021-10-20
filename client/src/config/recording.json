@@ -1,6 +1,0 @@
-{
-    "sampleRate": 22050,
-    "bufferSize": 4096,
-    "mimeType": "audio/wav",
-    "timeSlice": 100 
-}

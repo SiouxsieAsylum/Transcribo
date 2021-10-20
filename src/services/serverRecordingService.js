@@ -1,4 +1,3 @@
-const { recognizeStream } = require("./googleSTTService")();
 const recordingConfig = require("../../config/server-recording.json");
 const recognitionConfig = require("../../config/recognition.json");
 
@@ -7,7 +6,8 @@ const recorder = require("node-record-lpcm16");
 const { sampleRateHertz } = recognitionConfig;
 recordingConfig.sampleRateHertz = sampleRateHertz;
 
-const recordTranscript = () => {
+const recordTranscript = (connection) => {
+  const { recognizeStream } = require("./googleSTTService")(connection);
   recorder
     .record(recordingConfig)
     .stream()
