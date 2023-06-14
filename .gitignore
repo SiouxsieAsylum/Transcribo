@@ -2,4 +2,4 @@
 .env
 secure/
 node_modules/
-
+.DS_Store
