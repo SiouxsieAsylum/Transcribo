@@ -12,6 +12,7 @@ const initServer = () => {
   const server = http.createServer();
 
   server.listen(port);
+  console.log(`App listening on PORT ${port}`)
   const wsServer = new WebSocketServer({
     httpServer: server,
   });
@@ -22,7 +23,7 @@ const initServer = () => {
     const connectionId = uuidv4();
     const connection = request.accept(null, request.origin);
     clients[connectionId] = connection;
-    console.log(connectionId);
+    console.log('Websocket connection ID', connectionId);
     recordTranscript(connection);
   });
 

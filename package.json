@@ -5,9 +5,10 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client/ && npm run start",
-    "server": "nodemon app.js",
-    "start": "concurrently \"npm run client\"  \"npm run server\" ",
+    "install:both": "npm install && cd client/ && npm install",
+    "client:server": "cd client/ && npm run start",
+    "server": "GOOGLE_CLOUD_PROJECT=transcribo-five-plus nodemon app.js",
+    "start": "concurrently \"npm run server\" \"npm run client:server\" ",
     "prepare": "husky install",
     "prettier:fix": "prettier --write **.js src/*/**.js",
     "prettier:check": "prettier --check **.js src/*/**.js",
