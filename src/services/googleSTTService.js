@@ -1,29 +1,50 @@
 const recognitionConfig = require("../../config/recognition.json");
 const streamingRecognitionConfig = require("../../config/streaming-recognition.json");
 const speakerDiarizationConfig = require("../../config/speaker-diarization.json");
+const { googleUtils } = require("./utils");
 
 const speech = require("@google-cloud/speech");
 
 const { recieveTranscript } = require("./transcriptHandlerService");
+
+// TO-DO: Speech adaptation https://cloud.google.com/speech-to-text/docs/adaptation
 
 // ---------------- REQUEST CONFIGS --------------------
 recognitionConfig.diarizationConfig = speakerDiarizationConfig;
 streamingRecognitionConfig.config = recognitionConfig;
 
 const client = new speech.SpeechClient();
+let confidenceState = {
+  currentConfidence: 0,
+  highestConfidence: false
+}
 
 module.exports = (connection) => {
   module.recognizeStream = client
     .streamingRecognize(streamingRecognitionConfig)
     .on("error", console.error)
     .on("data", (data) => {
-      const { isFinal } = data.results[0];
-      const successfulResponse =
-        data.results[0] && data.results[0].alternatives[0];
+      const {evaluateHighestConfidence, resetConfidence} = googleUtils;
+      if (data.error) {
+        console.error(data.error)
+      };
+      
+      const results = data.results[0];
+      const { isFinal } = results;
+      const alts = results.alternatives[0];
+      const successfulResponse = results && alts;
+
       if (successfulResponse && isFinal) {
-        const { transcript } = successfulResponse;
-        console.log(`Final Transcript || ====-----==== || ${transcript}`);
-        connection ? connection.send(transcript) : recieveTranscript(data);
+        console.log('successful and final', JSON.stringify(data, null, 2))
+        confidenceState = evaluateHighestConfidence(confidenceState, alts.confidence);
+        console.log('confidence', confidenceState)
+        if (confidenceState.highestConfidence) {
+          console.log('highest confidence', JSON.stringify(data, null, 2));
+          const { transcript } = successfulResponse;
+          console.log(`Final Transcript || ====-----==== || ${transcript}`);
+          connection ? connection.send(transcript) : recieveTranscript(data);
+          resetConfidence(confidenceState);
+        };
       } else {
         console.log("\n\nReached transcription time limit, press Ctrl+C\n");
       }

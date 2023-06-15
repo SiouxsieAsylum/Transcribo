@@ -3,5 +3,6 @@
     "sampleRateHertz": 22050,
     "languageCode": "en-US",
     "enableAutomaticPunctuation": true,
-    "speechContexts": []
+    "speechContexts": [],
+    "max_alternatives": 0
 }
