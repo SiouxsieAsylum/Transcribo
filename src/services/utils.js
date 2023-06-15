@@ -8,8 +8,9 @@ const googleUtils = {
         // const newConfidenceState = this.resetConfidence();
 
         // there is not always a multiple send of the same confidence level or lower, so it doesn't always match
-        // timeout?
-        // may need to play with the recording settings
+        //-  timeout to evaluate if latest is highest confidence?
+        //-  timeout to prevent another coming through with the same text?
+        //-  may need to play with the recording settings
 
         const newConfidenceState = {
             currentConfidence: 0,

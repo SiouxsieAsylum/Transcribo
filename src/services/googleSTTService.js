@@ -28,7 +28,7 @@ module.exports = (connection) => {
       if (data.error) {
         console.error(data.error)
       };
-      
+
       const results = data.results[0];
       const { isFinal } = results;
       const alts = results.alternatives[0];
@@ -36,6 +36,7 @@ module.exports = (connection) => {
 
       if (successfulResponse && isFinal) {
         console.log('successful and final', JSON.stringify(data, null, 2))
+        // TO-DO: add more constraints to prevent double posts and allow ones to come through that don't have doubles
         confidenceState = evaluateHighestConfidence(confidenceState, alts.confidence);
         console.log('confidence', confidenceState)
         if (confidenceState.highestConfidence) {
