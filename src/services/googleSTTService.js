@@ -24,7 +24,7 @@ module.exports = (connection) => {
   module.recognizeStream = client
     .streamingRecognize(streamingRecognitionConfig)
     .on("error", console.error)
-    .on("data", (data) => {
+    .on("data", async (data) => {
       const {evaluateHighestConfidence, resetConfidence} = googleUtils;
       if (data.error) {
         console.error(data.error)
@@ -32,8 +32,8 @@ module.exports = (connection) => {
 
       const results = data.results[0];
       const { isFinal } = results;
-      const alts = results.alternatives[0];
-      const successfulResponse = results && alts;
+      const alt = results.alternatives[0];
+      const successfulResponse = results && alt;
 
       /*
         - if there is one final transcript, the application should send the transcript after a timeout
@@ -51,7 +51,8 @@ module.exports = (connection) => {
       if (successfulResponse && isFinal) {
         console.log('successful and final', JSON.stringify(data, null, 2))
         // TO-DO: add more constraints to prevent double posts and allow ones to come through that don't have doubles
-        confidenceState = evaluateHighestConfidence(confidenceState, alts.confidence);
+        
+        confidenceState = await evaluateHighestConfidence(confidenceState, alt);
         console.log('confidence', confidenceState)
         if (confidenceState.highestConfidence) {
           console.log('highest confidence', JSON.stringify(data, null, 2));

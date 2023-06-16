@@ -1,0 +1,6 @@
+{
+    "timeout": {
+        "duplicate": 100,
+        "confidence": 200
+    }
+}
