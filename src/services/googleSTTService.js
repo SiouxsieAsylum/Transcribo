@@ -1,3 +1,4 @@
+const confidenceConfig = require("../../config/confidence-config.json")
 const recognitionConfig = require("../../config/recognition.json");
 const streamingRecognitionConfig = require("../../config/streaming-recognition.json");
 const speakerDiarizationConfig = require("../../config/speaker-diarization.json");
@@ -33,6 +34,19 @@ module.exports = (connection) => {
       const { isFinal } = results;
       const alts = results.alternatives[0];
       const successfulResponse = results && alts;
+
+      /*
+        - if there is one final transcript, the application should send the transcript after a timeout
+          - how will it know?
+            - timeout occurs and highest confidence is still false
+        - If there is multiple sends of the final transcript, the application should update the confidence object and based on that update, send the transcript
+        - If transcript is already sent, do not send transcript
+          - how will it know?
+            - how to identify it as the same transcript
+            - is there a way to get the IDs of a transcription?
+            - if not, save the value and measure against it
+            - timeout required?
+      */ 
 
       if (successfulResponse && isFinal) {
         console.log('successful and final', JSON.stringify(data, null, 2))

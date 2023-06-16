@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 
-function Websocket({textList, update}){
+function Websocket({update}){
   const client = new W3CWebSocket(`ws://127.0.0.1:8000`)
 
   useEffect(() => {
@@ -13,7 +13,7 @@ function Websocket({textList, update}){
     // do not reassign the env var, just add to it
     client.onmessage = (message) => {
       console.log('message', message.data)
-      update(oldTextList => [...oldTextList, message.data + "|"])
+      update(oldTextList => [...oldTextList, message.data])
     }
 
     client.onclose = () => {

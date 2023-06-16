@@ -12,11 +12,11 @@ function App() {
     console.log('textList', textList)
   })
 
-
+  // TO-DO: keep the websocket from updating
+  
   return (
     <>
     <Websocket 
-      textList={textList}
       update={setTextList}
     />
     <MessageContainer 
