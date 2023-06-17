@@ -25,7 +25,7 @@ module.exports = (connection) => {
     .streamingRecognize(streamingRecognitionConfig)
     .on("error", console.error)
     .on("data", async (data) => {
-      const {evaluateHighestConfidence, resetConfidence} = googleUtils;
+      const {evaluateHighestConfidence, resetConfidence, evaluateDuplicate} = googleUtils;
       if (data.error) {
         console.error(data.error)
       };
@@ -46,9 +46,16 @@ module.exports = (connection) => {
             - is there a way to get the IDs of a transcription?
             - if not, save the value and measure against it
             - timeout required?
-      */ 
+      */
+     
+
 
       if (successfulResponse && isFinal) {
+        const isSameTranscript = confidenceState.prevTranscript && evaluateDuplicate(confidenceState, alt, true)
+        if (isSameTranscript) {
+          console.log(`Same as previous: ${alt.transcript}`)
+          return;
+        }
         console.log('successful and final', JSON.stringify(data, null, 2))
         // TO-DO: add more constraints to prevent double posts and allow ones to come through that don't have doubles
         
@@ -59,7 +66,7 @@ module.exports = (connection) => {
           const { transcript } = successfulResponse;
           console.log(`Final Transcript || ====-----==== || ${transcript}`);
           connection ? connection.send(transcript) : recieveTranscript(data);
-          resetConfidence(confidenceState);
+          confidenceState = resetConfidence(confidenceState);
         };
       } else {
         console.log("\n\nReached transcription time limit, press Ctrl+C\n");
