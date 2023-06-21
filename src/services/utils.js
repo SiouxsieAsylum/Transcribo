@@ -1,14 +1,14 @@
 const confidenceConfig = require('../../config/confidence-config.json');
+const { connectionManagement } = require('./asyncSendingService');
 
-const utils = {
-    removeTimeout: function(id){
-        clearTimeout(id)
-    }
+// -------------- UTILS ------------------------
+
+function removeTimeout(timer) {
+        clearTimeout(timer)
 };
 
-function sendOverConnection(connection, transcript) {
-    // how to get connection for the async calls
-}
+// ------------ GOOGLE UTILS -----------------
+
 
 function resetConfidence(confidenceState = {}) {
     return {
@@ -25,26 +25,25 @@ function resetConfidenceTimeout(id, ms, cb, args) {
 }
 
 function setConfidenceTimeout(ms, cb, args) {
-    console.trace(cb)
+    console.trace(args[0])
     const timeout = setTimeout(() => cb(...args), ms || confidenceConfig.timeout.confidence);
     return timeout;
 }
 
 
-function setPromotedTranscript(alt) {
-    // how to ensure this new transcript can get promoted after the method returns? Async sending.
+function setPromotedTranscript(confidence, alt) {
     console.log('setting promoted', alt.transcript)
-    return {
-        currentConfidence: alt.confidence,
-        highestConfidence: true,
-        transcript: alt.transcript,
-        timer: null
-    }
+    const {sendOverConnection} = connectionManagement
+    sendOverConnection(alt.transcript);
+    utils.removeTimeout(confidence.timer);
 }
 
 function evaluateDuplicate(source, comparitor, prev = false) {
     let property = prev ? 'prevTranscript' : 'transcript'
-    return source[property] === comparitor.transcript;
+    let sourceVal = source[property].trim();
+    let compareVal = comparitor.transcript.trim()
+    console.log(`source: ${sourceVal}, comparitor ${compareVal}`)
+    return sourceVal === compareVal;
 }
 
 async function evaluateHighestConfidence(confidenceState, alt) {
@@ -57,9 +56,9 @@ async function evaluateHighestConfidence(confidenceState, alt) {
         newConfidenceState.transcript = transcript;
         const cbArgs = [confidenceState, alt];
         if (confidenceState.timer) {
-            newConfidenceState.timer = resetConfidenceTimeout(confidenceState.timer, null, setPromotedTranscript, [alt])
+            newConfidenceState.timer = resetConfidenceTimeout(confidenceState.timer, null, setPromotedTranscript, cbArgs)
         } else {
-            newConfidenceState.timer = setConfidenceTimeout(null, setPromotedTranscript, [alt]);
+            newConfidenceState.timer = setConfidenceTimeout(null, setPromotedTranscript, cbArgs);
 
         }
     } else {
@@ -70,12 +69,9 @@ async function evaluateHighestConfidence(confidenceState, alt) {
 
 }
 
-
-/**
- * If the confidence increases with each call, it will set a timeout to 
- * 
- * 
- * */ 
+const utils = {
+    removeTimeout
+}
 
 const googleUtils = {
     resetConfidence,

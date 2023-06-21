@@ -1,6 +1,6 @@
 {
     "timeout": {
-        "duplicate": 100,
+        "duplicate": 300,
         "confidence": 200
     }
 }

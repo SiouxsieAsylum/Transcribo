@@ -12,8 +12,13 @@ function App() {
     console.log('textList', textList)
   })
 
-  // TO-DO: keep the websocket from updating
-  
+  /*
+  TO-DO: create a selection process for when you get multiple options
+    -how to differentiate when the batches are coming through?
+    -should the back end denote a batch?
+    -does the message object have anything I can use?  
+  */ 
+
   return (
     <>
     <Websocket 
