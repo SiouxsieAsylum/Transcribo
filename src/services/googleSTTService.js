@@ -17,10 +17,6 @@ recognitionConfig.diarizationConfig = speakerDiarizationConfig;
 streamingRecognitionConfig.config = recognitionConfig;
 
 const client = new speech.SpeechClient();
-// let confidenceState = {
-//   currentConfidence: 0,
-//   highestConfidence: false
-// }
 
 /***
  * 
@@ -34,7 +30,6 @@ module.exports = (connection) => {
     .streamingRecognize(streamingRecognitionConfig)
     .on("error", console.error)
     .on("data", async (data) => {
-
       const { saveConnection } = connectionManagement;
 
       if (data.error) {
@@ -50,7 +45,6 @@ module.exports = (connection) => {
 
 
       if (successfulResponse && isFinal) {
-        console.log('successful and final', JSON.stringify(data, null, 2))
         handleResults(alt);
       } else {
         console.log("\n\nReached transcription time limit, press Ctrl+C\n");

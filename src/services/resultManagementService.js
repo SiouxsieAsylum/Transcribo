@@ -43,12 +43,11 @@ const resetResultsAggregator = _ => {
 }
 
 const setPromotedTranscript = _ => {
-
     console.log('setting promoted', resultsAggregator.topResult.transcript)
     const { sendOverConnection } = connectionManagement;
     sendOverConnection(resultsAggregator.topResult.transcript);
     console.log('All results: \n', resultsAggregator.results)
-    resetResultsAggregator()
+    resetResultsAggregator();
 }
 
 const handleResults = async (alt) => {

@@ -8,6 +8,7 @@ recordingConfig.sampleRateHertz = sampleRateHertz;
 
 const recordTranscript = (connection) => {
   const { recognizeStream } = require("./googleSTTService")(connection);
+  console.log('establishing recorder')
   recorder
     .record(recordingConfig)
     .stream()

@@ -1,11 +1,14 @@
 let currentConnection;
 
 const saveConnection = (connection) => {
-    currentConnection = connection;
+    if (!currentConnection || connection.id !== currentConnection.id) {
+        currentConnection = connection;
+    }
 }
 
 const sendOverConnection = (transcript) => {
-    console.trace('sending: ', transcript)
+    console.log(currentConnection.id)
+    console.log('sending: ', transcript)
     currentConnection.send(transcript)
 }
 

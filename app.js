@@ -22,6 +22,7 @@ const initServer = () => {
   wsServer.on("request", function (request) {
     const connectionId = uuidv4();
     const connection = request.accept(null, request.origin);
+    connection.id = connectionId;
     clients[connectionId] = connection;
     console.log('Websocket connection ID', connectionId);
     recordTranscript(connection);
