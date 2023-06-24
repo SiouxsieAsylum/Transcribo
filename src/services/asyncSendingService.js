@@ -5,7 +5,7 @@ const saveConnection = (connection) => {
 }
 
 const sendOverConnection = (transcript) => {
-    console.trace('sending')
+    console.trace('sending: ', transcript)
     currentConnection.send(transcript)
 }
 

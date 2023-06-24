@@ -4,6 +4,7 @@ const streamingRecognitionConfig = require("../../config/streaming-recognition.j
 const speakerDiarizationConfig = require("../../config/speaker-diarization.json");
 const { connectionManagement } = require('./asyncSendingService')
 const { googleUtils } = require("./utils");
+const { handleResults}  = require('./resultManagementService');
 
 const speech = require("@google-cloud/speech");
 
@@ -16,10 +17,10 @@ recognitionConfig.diarizationConfig = speakerDiarizationConfig;
 streamingRecognitionConfig.config = recognitionConfig;
 
 const client = new speech.SpeechClient();
-let confidenceState = {
-  currentConfidence: 0,
-  highestConfidence: false
-}
+// let confidenceState = {
+//   currentConfidence: 0,
+//   highestConfidence: false
+// }
 
 /***
  * 
@@ -34,8 +35,7 @@ module.exports = (connection) => {
     .on("error", console.error)
     .on("data", async (data) => {
 
-      const {evaluateHighestConfidence, resetConfidence, evaluateDuplicate} = googleUtils;
-      const {saveConnection} = connectionManagement;
+      const { saveConnection } = connectionManagement;
 
       if (data.error) {
         console.error(data.error)
@@ -50,17 +50,8 @@ module.exports = (connection) => {
 
 
       if (successfulResponse && isFinal) {
-        const isSameTranscript = confidenceState.prevTranscript && evaluateDuplicate(confidenceState, alt, true)
-        if (isSameTranscript) {
-          console.log(`Same as previous: ${alt.transcript}`)
-          return;
-          console.log('progression');
-        }
         console.log('successful and final', JSON.stringify(data, null, 2))
-        
-        confidenceState = await evaluateHighestConfidence(confidenceState, alt);
-        console.log('confidence', confidenceState)
-        confidenceState = resetConfidence(confidenceState);
+        handleResults(alt);
       } else {
         console.log("\n\nReached transcription time limit, press Ctrl+C\n");
       }
