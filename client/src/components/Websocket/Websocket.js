@@ -1,10 +1,11 @@
 import { useEffect, memo } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
+const establishedConnection = [];
 
 const Websocket = memo(function Websocket({update}){
-  const client = new W3CWebSocket(`ws://127.0.0.1:8000`)
-
+  const client = new W3CWebSocket(`ws://127.0.0.1:8000`);
+  
   useEffect(() => {
     client.onopen = () => {
       console.log('Websocket Client Connected')

@@ -5,9 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
+  // <React.StrictMode> <--- Strict mode causes all components to render twice, only in dev mode. Made two websocket connections. 
+  //   <App />
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

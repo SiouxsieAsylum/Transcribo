@@ -5,7 +5,6 @@ import MessageContainer from './components/MessageContainer';
 import './App.css';
 
 function App() {
-  // lift this into separate component
   const [textList, setTextList] = useState([]);
   
   useEffect((textList) =>{
