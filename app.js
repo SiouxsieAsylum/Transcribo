@@ -29,7 +29,7 @@ const initServer = () => {
   });
 
   wsServer.on("close", function close(reason, code) {
-    console.log("ws is closed with code: " + code + " reason: " + reason);
+    console.log("ws is closed with code: " + code + " reason:\n" + JSON.stringify(reason, null, 2));
   });
 
   // On Error
