@@ -20,6 +20,12 @@ const Websocket = memo(function Websocket({update}){
     client.onclose = () => {
       console.log('Websocket closed')
     }
+
+    return () => {
+      console.log('closing')
+      client.send('Closing now!!')
+      client.close();
+    };//9KTPZGF6
   })
 
   return (
