@@ -8,14 +8,14 @@
 FROM alpine 
 
 # Sox
-RUN apk add sox
+# RUN apk add sox
 
 # Node
 
 # Copy files over
 
 # Run
-# # NPM Install
+# # NPM Clean Install ?
 # # Run start
 # # Run client start
 

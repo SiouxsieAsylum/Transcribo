@@ -8,7 +8,7 @@
     "install:both": "npm install && cd client/ && npm install",
     "client:server": "cd client/ && npm run start",
     "server": "GOOGLE_CLOUD_PROJECT=transcribo-five-plus nodemon app.js",
-    "start": "concurrently \"npm run server\" \"npm run client:server\" ",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider && concurrently \"npm run server\" \"npm run client:server\" ",
     "prepare": "husky install",
     "prettier:fix": "prettier --write **.js src/*/**.js",
     "prettier:check": "prettier --check **.js src/*/**.js",
@@ -38,7 +38,7 @@
     "websocket-stream": "^5.5.2"
   },
   "devDependencies": {
-    "concurrently": "^6.3.0",
+    "concurrently": "^6.5.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "husky": "^7.0.0",

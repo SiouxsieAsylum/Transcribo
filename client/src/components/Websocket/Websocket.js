@@ -25,7 +25,7 @@ const Websocket = memo(function Websocket({update}){
       console.log('closing')
       client.send('Closing now!!')
       client.close();
-    };//9KTPZGF6
+    };
   })
 
   return (
