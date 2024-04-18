@@ -1,0 +1,7 @@
+{
+    "connectionClosed": {
+        "title": "Connection Closed",
+        "message": "Server is disconnected, please reload to reconnect",
+        "buttonText": "Reload"
+    }
+}

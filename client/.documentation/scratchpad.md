@@ -13,6 +13,7 @@
     - need to pull the image first (add to readme)
 - Add modal and button to refresh page if websocket closes
     - Material UI?
+- Speed up the connection to google somehow? Is the time the actual transcription or my processing of the stream?
     
 ====================================
 ## Env Problems that need solving: 
@@ -20,11 +21,13 @@
     - "worked around" by:
         - running `export NODE_OPTIONS=--openssl-legacy-provider` <----  works for now
         - downgrading NODE
+        - https://stackoverflow.com/a/73027407 <--- actual fix for post-localhost?
 - Using Webpack 5 is causing issues for version of React-Scripts, which requires webpack 4
     - deleting package.json and reinstalling does not work
     - created .env and added `SKIP_PREFLIGHT_CHECK=true` to it
     - will likely need to downgrade webpack
 - No script for installing and running both sets of packages, or killing both servers, or refreshing both servers.
+    - both servers run with `concurrently`; need to decide if I should bring in `nodemon`
     - https://stackoverflow.com/questions/43415506/how-to-make-a-refresh-in-browser-with-gulp
     - https://github.com/gulp-community/gulp-livereload
     - https://github.com/intesso/connect-livereload

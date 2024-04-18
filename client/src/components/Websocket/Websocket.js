@@ -1,5 +1,16 @@
 import { useEffect, memo } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import {uuid4} from "uuid";
+
+/**
+ * how to reload something memoized
+ * if i need to reload the component when a key is updated, but not when the text is updated, 
+ * should I memoize the key? or the textlist, 
+ * as I don't want the text list to rerender the component?
+ * 
+ * 
+ * 
+ * */ 
 
 const establishedConnection = [];
 

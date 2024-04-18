@@ -5,9 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "install:both": "npm install && cd client/ && npm install",
-    "client:server": "cd client/ && npm run start",
+    "server-dependencies": "npm install",
+    "client-dependencies": "npm install --prefix client",
+    "install:both": "concurrently \"npm run server-dependencies\" \"npm run client-dependencies\"",
     "server": "GOOGLE_CLOUD_PROJECT=transcribo-five-plus nodemon app.js",
+    "client:server": "npm run start --prefix client",
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && concurrently \"npm run server\" \"npm run client:server\" ",
     "prepare": "husky install",
     "prettier:fix": "prettier --write **.js src/*/**.js",

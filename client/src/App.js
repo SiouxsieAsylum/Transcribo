@@ -1,15 +1,14 @@
 import { useState, useEffect } from 'react';
-import Websocket from './components/Websocket';
 import MessageContainer from './components/MessageContainer';
+import WebsocketContainer from './components/WebsocketContainer';
+import Modal from './components/Modal';
 
+import { connectionClosed } from './config/modal-contents.json';
 import './App.css';
+
 
 function App() {
   const [textList, setTextList] = useState([]);
-  
-  useEffect((textList) =>{
-    console.log('textList', textList)
-  })
 
   /*
   TO-DO: create a selection process for when you get multiple options
@@ -18,13 +17,21 @@ function App() {
     -does the message object have anything I can use?  
   */ 
 
+    const handleReload = () => {
+      console.clog("yerr")
+    }
+
   return (
     <>
-    <Websocket 
+    <WebsocketContainer 
       update={setTextList}
     />
     <MessageContainer 
       textList={textList}
+      />
+    <Modal
+      contents={connectionClosed}
+      callback={handleReload}
       />
     </>
   )
