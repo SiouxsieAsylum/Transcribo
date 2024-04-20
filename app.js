@@ -18,6 +18,16 @@ const initServer = () => {
   });
 
   const clients = {};
+  /**
+   * This will eventually need to keep track of
+   * - multiple clients for the same server? 
+   *   - if so, why does it not send the same messages to all websockets? (learning opportunity)
+   * - multiple 1:1 server/client relationships
+   *   - multiple docker containers managed at once, like coderpad
+   *   - separate this from having separate development environments
+   *   - can you nest having docker containers inside of a docker container? Should you?
+   *   - would it be smarter to have them be in contact with siblings (websocket containers and development containers?)
+   */
 
   wsServer.on("request", function (request) {
     const connectionId = uuidv4();
@@ -28,8 +38,9 @@ const initServer = () => {
     recordTranscript(connection);
   });
 
-  wsServer.on("close", function close(reason, code) {
-    console.log("ws is closed with code: " + code + " reason:\n" + JSON.stringify(reason, null, 2));
+  wsServer.on("close", function close(connection, reason, code) {
+    delete clients[connection.id];
+    console.log("ws is closed with code: " + code + " reason:\n" + reason.closeDescription);
   });
 
   // On Error

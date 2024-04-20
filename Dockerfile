@@ -2,7 +2,7 @@
 # Node 18
 # Sox
 # run start
-# run client start
+
 
 # Image
 FROM alpine 
@@ -16,7 +16,4 @@ FROM alpine
 
 # Run
 # # NPM Clean Install ?
-# # Run start
-# # Run client start
-
 # Expose Port

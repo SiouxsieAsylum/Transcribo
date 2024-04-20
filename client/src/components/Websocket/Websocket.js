@@ -1,6 +1,5 @@
 import { useEffect, memo } from 'react';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
-import {uuid4} from "uuid";
 
 /**
  * how to reload something memoized

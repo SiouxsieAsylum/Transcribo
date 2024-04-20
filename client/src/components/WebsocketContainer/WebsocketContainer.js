@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import Websocket from '../Websocket';
-import { v4 as uuidv4 } from "uuid";
 
-const WebsocketContainer = ({update}) => {
-    const [websocketClientId, setWebsocketClientId] = useState(uuidv4())
+
+const WebsocketContainer = ({update, key}) => {
+//  the container reloads but
+// - the text persists, 
+// - the connection doesnt reestablish, 
+//   so the transcription is made but not set to the FE
 
     return (
         <div 
-            key={websocketClientId}>
+            key={key}>
             <Websocket
                 update={update}
                 />
