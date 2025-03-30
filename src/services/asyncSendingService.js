@@ -6,10 +6,11 @@ const saveConnection = (connection) => {
     }
 }
 
-const sendOverConnection = (transcript) => {
-    console.log(currentConnection.id)
+const sendOverConnection = (topResult) => {
+    const { transcript } = topResult;
+    console.log('currentConnection.id', currentConnection.id)
     console.log('sending: ', transcript)
-    currentConnection.send(transcript)
+    currentConnection.send(`${transcript} -break- ${currentConnection.id}`)
 }
 
 

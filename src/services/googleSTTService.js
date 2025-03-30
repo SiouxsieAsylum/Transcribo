@@ -23,7 +23,12 @@ const client = new speech.SpeechClient();
  * How to denote a batch/state when it's multiple options of one sentance
  * How to ensure that a statement is sent to the FE and received without getting lost in the stream
  * 
+ * 
+ * Want to establish certain metrics
+ * - from reception of content from FE to transcription via google
+ * - from transcription from google to send to FE
  */ 
+
 
 module.exports = (connection) => {
   module.recognizeStream = client
@@ -42,7 +47,6 @@ module.exports = (connection) => {
       const { isFinal } = results;
       const alt = results.alternatives[0];
       const successfulResponse = results && alt;
-
 
       if (successfulResponse && isFinal) {
         handleResults(alt);

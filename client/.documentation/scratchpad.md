@@ -13,6 +13,8 @@
     - need to pull the image first (add to readme)
 - Add modal and button to refresh page if websocket closes
     - Material UI?
+    - [Mantine](https://mantine.dev/)
+    - [React Flow] (https://reactflow.dev/) - play well with mantine?
 - Speed up the connection to google somehow? Is the time the actual transcription or my processing of the stream?
     
 ====================================
@@ -27,10 +29,7 @@
     - created .env and added `SKIP_PREFLIGHT_CHECK=true` to it
     - will likely need to downgrade webpack
 - No script for installing and running both sets of packages, or killing both servers, or refreshing both servers.
-    - both servers run with `concurrently`; need to decide if I should bring in `nodemon`
-    - https://stackoverflow.com/questions/43415506/how-to-make-a-refresh-in-browser-with-gulp
-    - https://github.com/gulp-community/gulp-livereload
-    - https://github.com/intesso/connect-livereload
+    - ~~both servers run with `concurrently`; need to decide if I should bring in `nodemon`~~
 
 ## Functionality problems that need solving
 - `Reached transcription time limit, press Ctrl+C`
@@ -41,6 +40,7 @@
 ### Server
 - connection timeout handler
 - Taking commands
+- https://cloud.google.com/speech-to-text/docs/transcribe-streaming-audio continual processing of audio
 - Speech diarization
 - User auth and session info
 - MongoDB hookup

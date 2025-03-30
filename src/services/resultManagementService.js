@@ -33,20 +33,21 @@ const confidenceConfig = require('../../config/confidence-config.json');
 const resultsAggregator = {
     startTime: 0,
     topResult: {},
-    results: []
+    results: [],
 };
 
 const resetResultsAggregator = _ => {
-    resultsAggregator.startTime = 0
-    resultsAggregator.topResult = {}
-    resultsAggregator.results = []
+    resultsAggregator.startTime = Date.now();
+    resultsAggregator.topResult = {};
+    resultsAggregator.results = [];
 }
 
 const setPromotedTranscript = _ => {
+    console.log('All results: \n', resultsAggregator.results)
     console.log('setting promoted', resultsAggregator.topResult.transcript)
     const { sendOverConnection } = connectionManagement;
-    sendOverConnection(resultsAggregator.topResult.transcript);
-    console.log('All results: \n', resultsAggregator.results)
+    resultsAggregator.topResult.timeToTranscribe = Date.now()
+    sendOverConnection(resultsAggregator.topResult);
     resetResultsAggregator();
 }
 
@@ -70,12 +71,13 @@ const handleResults = async (alt) => {
     
     if (!Object.keys(resultsAggregator.topResult).length) {
         resultsAggregator.topResult = resultObject;
-        setTimeout(setPromotedTranscript, confidenceConfig.timeout.confidence);
     } else {
         if (resultsAggregator.topResult.confidence < resultObject.confidence) {
             resultsAggregator.topResult = resultObject;
         }
     }
+
+    setTimeout(setPromotedTranscript, confidenceConfig.timeout.confidence);
 
     resultsAggregator.results[now] = resultObject;
     console.log('resultAggregator', resultsAggregator)

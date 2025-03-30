@@ -18,6 +18,7 @@ const initServer = () => {
   });
 
   const clients = {};
+  const acceptedOrigins = ['http://localhost:3000']
   /**
    * This will eventually need to keep track of
    * - multiple clients for the same server? 
@@ -29,14 +30,22 @@ const initServer = () => {
    *   - would it be smarter to have them be in contact with siblings (websocket containers and development containers?)
    */
 
+
   wsServer.on("request", function (request) {
+    const { origin } = request;
+    if (acceptedOrigins.includes(origin)) {
+      request.accept(null, request.origin);
+    }
+  });
+
+  wsServer.on('connect', function(connection){
+    // add the ID set on the FE to connect here
     const connectionId = uuidv4();
-    const connection = request.accept(null, request.origin);
     connection.id = connectionId;
     clients[connectionId] = connection;
     console.log('Websocket connection ID', connectionId);
     recordTranscript(connection);
-  });
+  })
 
   wsServer.on("close", function close(connection, reason, code) {
     delete clients[connection.id];
@@ -46,6 +55,7 @@ const initServer = () => {
   // On Error
   wsServer.on("error", function (e) {
     console.log("error occured" + e);
+    // Set to a logger down the road
   });
 };
 
@@ -54,4 +64,10 @@ const initApplication = () => {
 };
 
 // ----- MAIN PROCESS ----
-initApplication();
+// how am I supposed to know which connectionID was just generated
+try {
+  initApplication();
+} catch (e) {
+  wsServer.close('')
+}
+
