@@ -11,9 +11,7 @@ const WebsocketContainer = ({update, key}) => {
     return (
         <div 
             key={key}>
-            <Websocket
-                update={update}
-                />
+            <Websocket/>
         </div>
 
     )

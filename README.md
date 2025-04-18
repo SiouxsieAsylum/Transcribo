@@ -8,5 +8,4 @@
 - run `npm run install:both`
 
 ## Running the Server
-Tab1: `npm run server`
-Tab2: `npm run client:server`
+- run `npm run start`
