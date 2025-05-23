@@ -39,11 +39,13 @@ const initServer = () => {
   });
 
   wsServer.on('connect', function(connection){
-    // add the ID set on the FE to connect here
+    // add the ID set on the FE to connect here - that's literally not even what I'm doing
+    
     const connectionId = uuidv4();
     connection.id = connectionId;
     clients[connectionId] = connection;
-    console.log('Websocket connection ID', connectionId);
+    console.log('new connection established')
+    // console.log('Websocket connection ID', connectionId);
     recordTranscript(connection);
   })
 

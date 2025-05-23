@@ -43,7 +43,7 @@ const resetResultsAggregator = _ => {
 }
 
 const setPromotedTranscript = _ => {
-    console.log('All results: \n', resultsAggregator.results)
+    // console.log('All results: \n', resultsAggregator.results)
     console.log('setting promoted', resultsAggregator.topResult.transcript)
     const { sendOverConnection } = connectionManagement;
     resultsAggregator.topResult.timeToTranscribe = Date.now()
@@ -67,7 +67,6 @@ const handleResults = async (alt) => {
         timestamp: now
     };
 
-    console.log(resultObject);
     
     if (!Object.keys(resultsAggregator.topResult).length) {
         resultsAggregator.topResult = resultObject;
@@ -80,7 +79,6 @@ const handleResults = async (alt) => {
     setTimeout(setPromotedTranscript, confidenceConfig.timeout.confidence);
 
     resultsAggregator.results[now] = resultObject;
-    console.log('resultAggregator', resultsAggregator)
 };
 
 module.exports = {

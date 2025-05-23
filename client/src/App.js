@@ -1,18 +1,23 @@
 import { useState } from 'react';
-import MessageContainer from './components/MessageContainer';
-import WebsocketContainer from './components/WebsocketContainer';
-import WebsocketContext from './contexts/WebsocketContext';
-import Modal from './components/Modal';
-import { v4 as uuidv4 } from "uuid";
-
-import { connectionClosed } from './config/modal-contents.json';
+import WebsocketContext from '../src/contexts/WebsocketContext';
 import './App.css';
 
 
+import { v4 as uuidv4 } from "uuid";
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import MainUIStateContainer from './components/MainUIStateContainer';
+
+import Modal from './components/Modal';
+import { connectionClosed } from './config/modal-contents.json';
+
+
+
 function App() {
-  const [textList, setTextList] = useState([]);
-  const [errorStatus, setErrorStatus] = useState(false)
-  const [connectionClientId, setConnectionClientId] = useState(uuidv4())
+ const [errorStatus, setErrorStatus] = useState(false)
+ const [connectionClientId, setConnectionClientId] = useState(uuidv4())
+ console.log('establishing app and client')
+ const client = new W3CWebSocket(`ws://127.0.0.1:8000`);
+
 
   /*
   TO-DO: create a selection process for when you get multiple options
@@ -30,14 +35,9 @@ function App() {
 
   return (
     <>
-    <WebsocketContext.Provider value={{update: setTextList, setErrorStatus}}>
-      <WebsocketContainer 
-        key={connectionClientId}
-      />
+    <WebsocketContext.Provider value={{client, connectionClientId, setErrorStatus}}>
+      <MainUIStateContainer/>
     </WebsocketContext.Provider>
-    <MessageContainer 
-      textList={textList}
-      />
     {errorStatus && <Modal
       contents={connectionClosed}
       callback={handleReload}
@@ -45,7 +45,7 @@ function App() {
     
     </>
   )
-}
+};
 
 export default App;
 

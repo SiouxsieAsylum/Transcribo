@@ -1,7 +1,7 @@
 import { useEffect, useContext, memo } from 'react';
-import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 import WebsocketContext from '../../contexts/WebsocketContext';
+import MessageListContext from '../../contexts/MessageListContext';
 
 /**
  * how to reload something memoized
@@ -13,17 +13,15 @@ import WebsocketContext from '../../contexts/WebsocketContext';
 
  * */ 
 
-const Websocket = memo(function Websocket(){
-  const client = new W3CWebSocket(`ws://127.0.0.1:8000`);
-  
-  const { update, setErrorStatus } = useContext(WebsocketContext)
+const Websocket = function Websocket(){
+  const { setErrorStatus, connectionClientId, client } = useContext(WebsocketContext)
+  const { update } = useContext(MessageListContext)
 
   useEffect(() => {
     client.onopen = () => {
-      console.log('Websocket Client Connected')
+      console.log('Websocket Client Connected: ' + connectionClientId)
     }
 
-    // do not reassign the env var, just add to it
     client.onmessage = ( message ) => {
       const [text, id] = message.data.split(' -break- ')
       console.log('message', message)
@@ -40,9 +38,7 @@ const Websocket = memo(function Websocket(){
     }
 
     return () => {
-      console.log('closing')
-      client.send('Closing now!!')
-      client.close();
+      console.log('hi not closing')
     };
   })
 
@@ -54,6 +50,6 @@ const Websocket = memo(function Websocket(){
       </div>
     </header>
   </>)
-});
+};
 
 export default Websocket;

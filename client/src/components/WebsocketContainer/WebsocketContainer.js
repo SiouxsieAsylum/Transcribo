@@ -1,17 +1,15 @@
-// import { useState, useEffect  } from 'react';
-import Websocket from '../Websocket';
+import { useContext } from 'react';
+import WebsocketClientHandler from '../WebsocketClientHandler';
+import WebsocketContext from '../../contexts/WebsocketContext';
 
 
-const WebsocketContainer = ({update, key}) => {
-//  the container reloads but
-// - the text persists, 
-// - the connection doesnt reestablish, 
-//   so the transcription is made but not set to the FE
+const WebsocketContainer = () => {
+const { connectionClientId } = useContext(WebsocketContext)
 
     return (
         <div 
-            key={key}>
-            <Websocket/>
+            connection={connectionClientId}>
+            <WebsocketClientHandler/>
         </div>
 
     )
