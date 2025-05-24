@@ -7,7 +7,7 @@ const initServer = () => {
   const port = process.env.WEBSOCKET_PORT || 8000;
   const WebSocketServer = require("websocket").server;
   const http = require("http");
-  const { v4: uuidv4 } = require("uuid");
+  const { validate: uuidValidate } = require("uuid");
 
   const server = http.createServer();
 
@@ -39,18 +39,22 @@ const initServer = () => {
   });
 
   wsServer.on('connect', function(connection){
-    // add the ID set on the FE to connect here - that's literally not even what I'm doing
-    
-    const connectionId = uuidv4();
-    connection.id = connectionId;
-    clients[connectionId] = connection;
-    console.log('new connection established')
-    // console.log('Websocket connection ID', connectionId);
+   connection.on('message', (message)  => {
+      if (message.type === 'utf8' && uuidValidate(message.utf8Data)) {
+        const connectionId = message.utf8Data;
+        connection.id = connectionId;
+        console.log('Accepted websocket connection ID', connectionId);
+        clients[connectionId] = connection;
+        console.log(Object.keys(clients))
+      }
+   })
     recordTranscript(connection);
   })
 
   wsServer.on("close", function close(connection, reason, code) {
     delete clients[connection.id];
+    console.log(Object.keys(clients));
+    console.log('************************')
     console.log("ws is closed with code: " + code + " reason:\n" + reason.closeDescription);
   });
 

@@ -1,4 +1,4 @@
-import { useEffect, useContext, memo } from 'react';
+import { useEffect, useContext } from 'react';
 
 import WebsocketContext from '../../contexts/WebsocketContext';
 import MessageListContext from '../../contexts/MessageListContext';
@@ -20,6 +20,7 @@ const Websocket = function Websocket(){
   useEffect(() => {
     client.onopen = () => {
       console.log('Websocket Client Connected: ' + connectionClientId)
+      client.send(connectionClientId);
     }
 
     client.onmessage = ( message ) => {
@@ -29,7 +30,7 @@ const Websocket = function Websocket(){
       update(oldTextList => [...oldTextList, text])
     }
 
-    client.onclose = () => {
+    client.onclose = (event) => {
       console.log('Websocket closed')
     }
 
